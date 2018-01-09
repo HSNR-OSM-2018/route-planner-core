@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="route-planner-core" target="1.9" />
+      <module name="route-planner-core" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
