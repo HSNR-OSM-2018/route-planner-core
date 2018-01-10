@@ -1,4 +1,4 @@
-package org.routenplanner.core.algoritms;
+package de.hsnr.osm2018.routenplanner.core.algoritms;
 
 import java.util.PriorityQueue;
 import java.util.ArrayList;
