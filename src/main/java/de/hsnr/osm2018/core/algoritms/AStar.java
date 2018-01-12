@@ -1,4 +1,4 @@
-package de.hsnr.osm2018.routenplanner.core.algoritms;
+package de.hsnr.osm2018.core.algoritms;
 
 import de.hsnr.osm2018.data.graph.*;
 
@@ -12,7 +12,7 @@ public class AStar {
         return Math.abs(goal.getLongitute() - current.getLongitute()) + Math.abs(goal.getLatitude() - current.getLatitude());
     }
 
-    public boolean voidrunAStar(Node root, Node goal){
+    public boolean runAStar(Node root, Node goal){
         PriorityQueue<Node> openlist = new PriorityQueue<>(20, new Comparator<Node>() {
             @Override
             public int compare(Node o1, Node o2) {
@@ -56,11 +56,11 @@ public class AStar {
         return false;
     }
 
-    public ArrayList<Node> getPath(Node goal){
+    public ArrayList<Node> getPath(Node root, Node goal){
         ArrayList<Node> path = new ArrayList<>();
         Node current = goal;
         path.add(current);
-        while(current.getParent() != null){
+        while(current != root){
             current = current.getParent();
             path.add(0,current);
         }
