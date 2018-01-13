@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class AStar {
 
-    private double computeHeuristic(Node current, Node goal){
-        return Math.abs(goal.getLongitute() - current.getLongitute()) + Math.abs(goal.getLatitude() - current.getLatitude());
+    private double computeHeuristic(Node current, Node goal) {
+        return Math.abs(goal.getLongitude() - current.getLongitude()) + Math.abs(goal.getLatitude() - current.getLatitude());
     }
 
-    public boolean runAStar(Node root, Node goal){
+    public boolean runAStar(Graph graph, Node root, Node goal) {
         PriorityQueue<Node> openlist = new PriorityQueue<>(20, new Comparator<Node>() {
             @Override
             public int compare(Node o1, Node o2) {
@@ -24,26 +24,26 @@ public class AStar {
 
         openlist.add(root);
 
-        while(!openlist.isEmpty()){
+        while (!openlist.isEmpty()) {
             Node u = openlist.poll();
-            if(u == goal){
+            if (u == goal) {
                 return true;
             }
-            if(!closedlist.contains(u)) {
+            if (!closedlist.contains(u)) {
                 closedlist.add(u);
                 for (Edge e : u.getEdges()) {
-                    Node neighbour = e.getDestinationNode();
-                    if(neighbour == u){
+                    Node neighbour = e.getDestinationNode(graph);
+                    if (neighbour == u) {
                         neighbour = e.getStartNode();
                     }
                     double dist = u.getD() + e.getLength();
                     double h = this.computeHeuristic(goal, neighbour);
 
-                    if(openlist.contains(neighbour) && neighbour.getD() > dist){
+                    if (openlist.contains(neighbour) && neighbour.getD() > dist) {
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
                         neighbour.setParent(u);
-                    } else if(neighbour.getParent() == null){
+                    } else if (neighbour.getParent() == null) {
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
                         neighbour.setParent(u);
@@ -56,13 +56,13 @@ public class AStar {
         return false;
     }
 
-    public ArrayList<Node> getPath(Node root, Node goal){
+    public ArrayList<Node> getPath(Node root, Node goal) {
         ArrayList<Node> path = new ArrayList<>();
         Node current = goal;
         path.add(current);
-        while(current != root){
+        while (current != root) {
             current = current.getParent();
-            path.add(0,current);
+            path.add(0, current);
         }
         return path;
     }
