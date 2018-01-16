@@ -23,21 +23,27 @@ public class AStar {
         root.setD(0.0);
 
         openlist.add(root);
-
+        Node neighbour;
         while (!openlist.isEmpty()) {
             Node u = openlist.poll();
-            if (u == goal) {
+            if (u.getId().longValue() == goal.getId().longValue()) {
                 return true;
             }
+
             if (!closedlist.contains(u)) {
                 closedlist.add(u);
                 for (Edge e : u.getEdges()) {
-                    Node neighbour = e.getDestinationNode(graph);
-                    if (neighbour == u) {
+                    neighbour = e.getDestinationNode(graph);
+                    if(neighbour.getId().longValue() == root.getId().longValue()){
+                        continue;
+                    }
+                    if (neighbour.getId().longValue() == u.getId().longValue()) {
                         neighbour = e.getStartNode();
                     }
-                    double dist = u.getD() + e.getLength();
+                    double dist = u.getD() + ((double)e.getLength())/(1000);
+                   // System.out.printf("dist %f \n", dist);
                     double h = this.computeHeuristic(goal, neighbour);
+
 
                     if (openlist.contains(neighbour) && neighbour.getD() > dist) {
                         neighbour.setD(dist);
@@ -49,6 +55,7 @@ public class AStar {
                         neighbour.setParent(u);
                         openlist.add(neighbour);
                     }
+
 
                 }
             }
@@ -70,17 +77,28 @@ public class AStar {
 
         while (!openlist.isEmpty()) {
             Node u = openlist.poll();
-            if (u == goal) {
+            if (u.getId().longValue() == goal.getId().longValue()) {
                 return true;
             }
             if (!closedlist.contains(u)) {
                 closedlist.add(u);
                 for (Edge e : u.getEdges()) {
+                    if (e.getSpeed() == 0){
+                        continue;
+                    }
                     Node neighbour = e.getDestinationNode(graph);
-                    if (neighbour == u) {
+
+                    if(neighbour.getId().longValue() == root.getId().longValue()){
+                        continue;
+                    }
+
+                    if (neighbour.getId().longValue() == u.getId().longValue()) {
                         neighbour = e.getStartNode();
                     }
-                    double dist = u.getD() + ((e.getLength()/1000)/e.getSpeed());
+
+
+
+                    double dist = u.getD() + ( ((double)(e.getLength()/1000))/e.getSpeed());
                     double h = (this.computeHeuristic(goal, neighbour));
 
                     if (openlist.contains(neighbour) && neighbour.getD() > dist) {
@@ -104,7 +122,7 @@ public class AStar {
         ArrayList<Node> path = new ArrayList<>();
         Node current = goal;
         path.add(current);
-        while (current != root) {
+        while (current.getId().longValue() != root.getId().longValue()) {
             current = current.getParent();
             path.add(0, current);
         }

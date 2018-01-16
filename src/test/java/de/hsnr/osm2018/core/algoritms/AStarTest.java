@@ -1,5 +1,6 @@
 package de.hsnr.osm2018.core.algoritms;
 
+import de.hsnr.osm2018.provider.RandomProvider;
 import org.junit.Before;
 import org.junit.Test;
 import de.hsnr.osm2018.data.graph.*;
@@ -49,6 +50,36 @@ public class AStarTest {
     public void runAStar() {
         AStar a = new AStar();
         assertTrue(a.runAStar(this.graph, this.start, this.goal));
+    }
+
+    @Test
+    public void randomTest(){
+        RandomProvider provider = new RandomProvider(100);
+        Graph graph = provider.getGraph();
+        Node start = graph.getNode(1L);
+        Node goal = graph.getNode(55L);
+
+        AStar a = new AStar();
+        a.runAStarWithSpeed(graph, start,goal);
+        ArrayList<Node> path = a.getPath(start,goal);
+        for (Node n : path) {
+            System.out.printf("Node %d, Gewicht: %f ", n.getId(), n.getD());
+        }
+        System.out.printf("Gewicht : %f \n",goal.getD());
+
+        for (Node n: graph.getNodes().values()){
+            n.setParent(null);
+        }
+
+        a.runAStar(graph,start,goal);
+        path = a.getPath(start,goal);
+        for (Node n : path) {
+            System.out.printf("Node %d, Gewicht: %f ", n.getId(), n.getD());
+        }
+        System.out.printf("Gewicht : %f \n",goal.getD());
+
+
+
     }
 
     @Test
