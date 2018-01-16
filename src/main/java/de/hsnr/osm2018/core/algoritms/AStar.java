@@ -21,6 +21,7 @@ public class AStar {
         });
         ArrayList<Node> closedlist = new ArrayList<>();
         root.setD(0.0);
+        root.setF(0.0);
 
         openlist.add(root);
         Node neighbour;
