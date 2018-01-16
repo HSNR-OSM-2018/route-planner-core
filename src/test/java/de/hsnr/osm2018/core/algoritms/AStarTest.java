@@ -31,15 +31,15 @@ public class AStarTest {
         graph.add(n5);
         graph.add(n6);
 
-        n1.addEdge(new Edge(n1, n2.getId(), 6, (short) 30, EdgeType.PRIMARY));
-        n1.addEdge(new Edge(n1, n3.getId(), 2, (short) 30, EdgeType.PRIMARY));
-        n1.addEdge(new Edge(n1, n4.getId(), 3, (short) 30, EdgeType.PRIMARY));
-        n2.addEdge(new Edge(n2, n4.getId(), 2, (short) 30, EdgeType.PRIMARY));
-        n3.addEdge(new Edge(n3, n4.getId(), 5, (short) 30, EdgeType.PRIMARY));
-        n3.addEdge(new Edge(n3, n5.getId(), 3, (short) 30, EdgeType.PRIMARY));
-        n4.addEdge(new Edge(n4, n5.getId(), 1, (short) 30, EdgeType.PRIMARY));
-        n5.addEdge(new Edge(n5, n6.getId(), 7, (short) 30, EdgeType.PRIMARY));
-        n5.addEdge(new Edge(n5, n6.getId(), 7, (short) 30, EdgeType.PRIMARY));
+        n1.addEdge(new Edge(n1, n2.getId(), 6, (short) 60, EdgeType.PRIMARY));
+        n1.addEdge(new Edge(n1, n3.getId(), 2, (short) 110, EdgeType.PRIMARY));
+        n1.addEdge(new Edge(n1, n4.getId(), 3, (short) 60, EdgeType.PRIMARY));
+        n2.addEdge(new Edge(n2, n4.getId(), 2, (short) 110, EdgeType.PRIMARY));
+        n3.addEdge(new Edge(n3, n4.getId(), 5, (short) 60, EdgeType.PRIMARY));
+        n3.addEdge(new Edge(n3, n5.getId(), 3, (short) 60, EdgeType.PRIMARY));
+        n4.addEdge(new Edge(n4, n5.getId(), 1, (short) 110, EdgeType.PRIMARY));
+        n5.addEdge(new Edge(n5, n6.getId(), 7, (short) 60, EdgeType.PRIMARY));
+        n5.addEdge(new Edge(n5, n6.getId(), 7, (short) 110, EdgeType.PRIMARY));
 
         this.start = n1;
         this.goal = n6;
@@ -54,6 +54,15 @@ public class AStarTest {
     @Test
     public void getPath() {
         AStar a = new AStar();
+        AStar b = new AStar();
+        b.runAStarWithSpeed(this.graph,this.start, this.goal);
+        ArrayList<Node> pathWithSpeed=b.getPath(this.start, this.goal);
+
+        for (Node n : pathWithSpeed) {
+            System.out.printf("Node %d, ", n.getId());
+        }
+        System.out.printf("\n");
+
         a.runAStar(this.graph, this.start, this.goal);
         ArrayList<Node> path = a.getPath(this.start, this.goal);
         for (Node n : path) {
