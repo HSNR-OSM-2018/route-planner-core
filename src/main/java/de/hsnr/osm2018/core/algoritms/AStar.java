@@ -56,6 +56,50 @@ public class AStar {
         return false;
     }
 
+    public boolean runAStarWithSpeed(Graph graph, Node root, Node goal) {
+        PriorityQueue<Node> openlist = new PriorityQueue<>(20, new Comparator<Node>() {
+            @Override
+            public int compare(Node o1, Node o2) {
+                return Double.compare(o1.getF(), o2.getF());
+            }
+        });
+        ArrayList<Node> closedlist = new ArrayList<>();
+        root.setD(0.0);
+
+        openlist.add(root);
+
+        while (!openlist.isEmpty()) {
+            Node u = openlist.poll();
+            if (u == goal) {
+                return true;
+            }
+            if (!closedlist.contains(u)) {
+                closedlist.add(u);
+                for (Edge e : u.getEdges()) {
+                    Node neighbour = e.getDestinationNode(graph);
+                    if (neighbour == u) {
+                        neighbour = e.getStartNode();
+                    }
+                    double dist = u.getD() + ((e.getLength()/1000)/e.getSpeed());
+                    double h = (this.computeHeuristic(goal, neighbour));
+
+                    if (openlist.contains(neighbour) && neighbour.getD() > dist) {
+                        neighbour.setD(dist);
+                        neighbour.setF(h + dist);
+                        neighbour.setParent(u);
+                    } else if (neighbour.getParent() == null) {
+                        neighbour.setD(dist);
+                        neighbour.setF(h + dist);
+                        neighbour.setParent(u);
+                        openlist.add(neighbour);
+                    }
+
+                }
+            }
+        }
+        return false;
+    }
+
     public ArrayList<Node> getPath(Node root, Node goal) {
         ArrayList<Node> path = new ArrayList<>();
         Node current = goal;
