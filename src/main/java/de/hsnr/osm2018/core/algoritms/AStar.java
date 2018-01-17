@@ -18,12 +18,16 @@ public class AStar {
         return Math.sqrt((dx*dx)+(dy*dy));
     }
 
-    private NodeContainer getContainer(Node node) {
+    public NodeContainer getContainer(Node node) {
         if (mContainer.containsKey(node.getId())) {
             return mContainer.get(node.getId());
         }
         mContainer.put(node.getId(), new NodeContainer(node));
         return mContainer.get(node.getId());
+    }
+
+    public void clearContainer() {
+        mContainer.clear();
     }
 
     public boolean runAStar(Graph graph, Node root, Node goal) {
@@ -68,7 +72,7 @@ public class AStar {
                         counter++;
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
-                        neighbour.setParent(u);
+                        neighbour.setParent(u.getParent());
                     } else if (neighbour.getParent() == null) {
                         cdouble++;
                         neighbour.setD(dist);

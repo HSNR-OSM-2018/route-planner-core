@@ -74,14 +74,9 @@ public class AStarTest {
             cpath++;
             System.out.printf("Node %d, Gewicht: %f ", n.getNode().getId(), n.getD());
         }
-        System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", goal.getD(), cpath, elapse.toMillis());
+        System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", a.getContainer(goal).getD(), cpath, elapse.toMillis());
 
-        for (Node n: graph.getNodes().values()){
-            n.setParent(null);
-            n.setD(Double.POSITIVE_INFINITY);
-            n.setF(0.0);
-        }
-        cpath = 0;
+        a.clearContainer();
 
         t1 = Instant.now();
         a.runAStar(graph,start,goal);
@@ -90,9 +85,9 @@ public class AStarTest {
         path = a.getPath(start,goal);
         for (NodeContainer n : path) {
             cpath++;
-            System.out.printf("Node %d, Gewicht: %f ", n.getId(), n.getD());
+            System.out.printf("Node %d, Gewicht: %f ", n.getNode().getId(), n.getD());
         }
-        System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", goal.getD(), cpath, elapse.toMillis());
+        System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", a.getContainer(goal).getD(), cpath, elapse.toMillis());
 
 
 
@@ -112,8 +107,8 @@ public class AStarTest {
 
         a.runAStar(this.graph, this.start, this.goal);
         ArrayList<NodeContainer> path = a.getPath(this.start, this.goal);
-        for (Node n : path) {
-            System.out.printf("Node %d, ", n.getId());
+        for (NodeContainer n : path) {
+            System.out.printf("Node %d, ", n.getNode().getId());
         }
         assertTrue(true);
     }
