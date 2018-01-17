@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import de.hsnr.osm2018.data.graph.*;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -54,29 +56,43 @@ public class AStarTest {
 
     @Test
     public void randomTest(){
-        RandomProvider provider = new RandomProvider(100);
+        int cpath = 0;
+        Instant t1, t2;
+        Duration elapse;
+        RandomProvider provider = new RandomProvider(10000);
         Graph graph = provider.getGraph();
         Node start = graph.getNode(1L);
-        Node goal = graph.getNode(55L);
+        Node goal = graph.getNode(950L);
 
         AStar a = new AStar();
+        t1 = Instant.now();
         a.runAStarWithSpeed(graph, start,goal);
+        t2 = Instant.now();
+        elapse = Duration.between(t1,t2);
         ArrayList<Node> path = a.getPath(start,goal);
         for (Node n : path) {
+            cpath++;
             System.out.printf("Node %d, Gewicht: %f ", n.getId(), n.getD());
         }
-        System.out.printf("Gewicht : %f \n",goal.getD());
+        System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", goal.getD(), cpath, elapse.toMillis());
 
         for (Node n: graph.getNodes().values()){
             n.setParent(null);
+            n.setD(Double.POSITIVE_INFINITY);
+            n.setF(0.0);
         }
+        cpath = 0;
 
+        t1 = Instant.now();
         a.runAStar(graph,start,goal);
+        t2 = Instant.now();
+        elapse = Duration.between(t1,t2);
         path = a.getPath(start,goal);
         for (Node n : path) {
+            cpath++;
             System.out.printf("Node %d, Gewicht: %f ", n.getId(), n.getD());
         }
-        System.out.printf("Gewicht : %f \n",goal.getD());
+        System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", goal.getD(), cpath, elapse.toMillis());
 
 
 

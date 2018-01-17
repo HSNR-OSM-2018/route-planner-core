@@ -13,6 +13,7 @@ public class AStar {
     }
 
     public boolean runAStar(Graph graph, Node root, Node goal) {
+        int counter = 0, cdouble = 0;
         PriorityQueue<Node> openlist = new PriorityQueue<>(20, new Comparator<Node>() {
             @Override
             public int compare(Node o1, Node o2) {
@@ -28,6 +29,7 @@ public class AStar {
         while (!openlist.isEmpty()) {
             Node u = openlist.poll();
             if (u.getId().longValue() == goal.getId().longValue()) {
+                System.out.printf("Durchgangene Knoten: %d, Doppelte: %d, Gesamt: %d\n", counter, cdouble, counter+cdouble);
                 return true;
             }
 
@@ -47,10 +49,12 @@ public class AStar {
 
 
                     if (openlist.contains(neighbour) && neighbour.getD() > dist) {
+                        counter++;
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
                         neighbour.setParent(u);
                     } else if (neighbour.getParent() == null) {
+                        cdouble++;
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
                         neighbour.setParent(u);
@@ -65,6 +69,7 @@ public class AStar {
     }
 
     public boolean runAStarWithSpeed(Graph graph, Node root, Node goal) {
+        int counter = 0, cdouble = 0;
         PriorityQueue<Node> openlist = new PriorityQueue<>(20, new Comparator<Node>() {
             @Override
             public int compare(Node o1, Node o2) {
@@ -79,6 +84,7 @@ public class AStar {
         while (!openlist.isEmpty()) {
             Node u = openlist.poll();
             if (u.getId().longValue() == goal.getId().longValue()) {
+                System.out.printf("Durchgangene Knoten: %d, Doppelte: %d, Gesamt: %d\n", counter, cdouble, counter+cdouble);
                 return true;
             }
             if (!closedlist.contains(u)) {
@@ -103,10 +109,12 @@ public class AStar {
                     double h = (this.computeHeuristic(goal, neighbour));
 
                     if (openlist.contains(neighbour) && neighbour.getD() > dist) {
+                        cdouble++;
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
                         neighbour.setParent(u);
                     } else if (neighbour.getParent() == null) {
+                        counter++;
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
                         neighbour.setParent(u);
