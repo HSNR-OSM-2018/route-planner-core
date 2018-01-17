@@ -70,12 +70,12 @@ public class AStar {
 
 
                     if (openlist.contains(neighbour) && neighbour.getD() > dist) {
-                        counter++;
+                        cdouble++;
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
                         neighbour.setParent(u.getNode());
                     } else if (neighbour.getParent() == null) {
-                        cdouble++;
+                        counter++;
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
                         neighbour.setParent(u.getNode());
