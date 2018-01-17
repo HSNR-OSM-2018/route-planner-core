@@ -34,15 +34,15 @@ public class AStarTest {
         graph.add(n5);
         graph.add(n6);
 
-        n1.addEdge(new Edge(n1, n2.getId(), 6, (short) 60, EdgeType.PRIMARY));
-        n1.addEdge(new Edge(n1, n3.getId(), 2, (short) 110, EdgeType.PRIMARY));
-        n1.addEdge(new Edge(n1, n4.getId(), 3, (short) 60, EdgeType.PRIMARY));
-        n2.addEdge(new Edge(n2, n4.getId(), 2, (short) 110, EdgeType.PRIMARY));
-        n3.addEdge(new Edge(n3, n4.getId(), 5, (short) 60, EdgeType.PRIMARY));
-        n3.addEdge(new Edge(n3, n5.getId(), 3, (short) 60, EdgeType.PRIMARY));
-        n4.addEdge(new Edge(n4, n5.getId(), 1, (short) 110, EdgeType.PRIMARY));
-        n5.addEdge(new Edge(n5, n6.getId(), 7, (short) 60, EdgeType.PRIMARY));
-        n5.addEdge(new Edge(n5, n6.getId(), 7, (short) 110, EdgeType.PRIMARY));
+        n1.addEdge(new Edge(n1, n2, 6, (short) 60, EdgeType.PRIMARY));
+        n1.addEdge(new Edge(n1, n3, 2, (short) 110, EdgeType.PRIMARY));
+        n1.addEdge(new Edge(n1, n4, 3, (short) 60, EdgeType.PRIMARY));
+        n2.addEdge(new Edge(n2, n4, 2, (short) 110, EdgeType.PRIMARY));
+        n3.addEdge(new Edge(n3, n4, 5, (short) 60, EdgeType.PRIMARY));
+        n3.addEdge(new Edge(n3, n5, 3, (short) 60, EdgeType.PRIMARY));
+        n4.addEdge(new Edge(n4, n5, 1, (short) 110, EdgeType.PRIMARY));
+        n5.addEdge(new Edge(n5, n6, 7, (short) 60, EdgeType.PRIMARY));
+        n5.addEdge(new Edge(n5, n6, 7, (short) 110, EdgeType.PRIMARY));
 
         this.start = n1;
         this.goal = n6;
@@ -69,10 +69,10 @@ public class AStarTest {
         a.runAStarWithSpeed(graph, start,goal);
         t2 = Instant.now();
         elapse = Duration.between(t1,t2);
-        ArrayList<Node> path = a.getPath(start,goal);
-        for (Node n : path) {
+        ArrayList<NodeContainer> path = a.getPath(start,goal);
+        for (NodeContainer n : path) {
             cpath++;
-            System.out.printf("Node %d, Gewicht: %f ", n.getId(), n.getD());
+            System.out.printf("Node %d, Gewicht: %f ", n.getNode().getId(), n.getD());
         }
         System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", goal.getD(), cpath, elapse.toMillis());
 
@@ -88,7 +88,7 @@ public class AStarTest {
         t2 = Instant.now();
         elapse = Duration.between(t1,t2);
         path = a.getPath(start,goal);
-        for (Node n : path) {
+        for (NodeContainer n : path) {
             cpath++;
             System.out.printf("Node %d, Gewicht: %f ", n.getId(), n.getD());
         }
@@ -103,15 +103,15 @@ public class AStarTest {
         AStar a = new AStar();
         AStar b = new AStar();
         b.runAStarWithSpeed(this.graph,this.start, this.goal);
-        ArrayList<Node> pathWithSpeed=b.getPath(this.start, this.goal);
+        ArrayList<NodeContainer> pathWithSpeed=b.getPath(this.start, this.goal);
 
-        for (Node n : pathWithSpeed) {
-            System.out.printf("Node %d, ", n.getId());
+        for (NodeContainer n : pathWithSpeed) {
+            System.out.printf("Node %d, ", n.getNode().getId());
         }
         System.out.printf("\n");
 
         a.runAStar(this.graph, this.start, this.goal);
-        ArrayList<Node> path = a.getPath(this.start, this.goal);
+        ArrayList<NodeContainer> path = a.getPath(this.start, this.goal);
         for (Node n : path) {
             System.out.printf("Node %d, ", n.getId());
         }
