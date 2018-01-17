@@ -1,6 +1,9 @@
 package de.hsnr.osm2018.core.algoritms;
 
+import de.hsnr.osm2018.provider.provider.PbfProvider;
 import de.hsnr.osm2018.provider.provider.RandomProvider;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import de.hsnr.osm2018.data.graph.*;
@@ -55,7 +58,7 @@ public class AStarTest {
     }
 
     @Test
-    public void randomTest(){
+    public void randomTest() {
         int cpath = 0;
         Instant t1, t2;
         Duration elapse;
@@ -66,10 +69,10 @@ public class AStarTest {
 
         AStar a = new AStar();
         t1 = Instant.now();
-        a.runAStarWithSpeed(graph, start,goal);
+        a.runAStarWithSpeed(graph, start, goal);
         t2 = Instant.now();
-        elapse = Duration.between(t1,t2);
-        ArrayList<NodeContainer> path = a.getPath(start,goal);
+        elapse = Duration.between(t1, t2);
+        ArrayList<NodeContainer> path = a.getPath(start, goal);
         for (NodeContainer n : path) {
             cpath++;
             System.out.printf("Node %d, Gewicht: %f ", n.getNode().getId(), n.getD());
@@ -81,26 +84,80 @@ public class AStarTest {
         System.out.printf("end\n");
 
         t1 = Instant.now();
-        a.runAStar(graph,start,goal);
+        a.runAStar(graph, start, goal);
         t2 = Instant.now();
-        elapse = Duration.between(t1,t2);
-        path = a.getPath(start,goal);
+        elapse = Duration.between(t1, t2);
+        path = a.getPath(start, goal);
         for (NodeContainer n : path) {
             cpath++;
             System.out.printf("Node %d, Gewicht: %f ", n.getNode().getId(), n.getD());
         }
         System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", a.getContainer(goal).getD(), cpath, elapse.toMillis());
+    }
 
+    @Test
+    public void duesseldorfTest() {
+        int cpath = 0;
+        Instant t1, t2;
+        Duration elapse;
+        PbfProvider provider = new PbfProvider("ddorf.pbf");
+        Graph graph = provider.getGraph();
+        Node start = graph.getNode(1544556049L);
+        Node goal = graph.getNode(687006545L);
 
+        AStar a = new AStar();
+        t1 = Instant.now();
+        a.runAStarWithSpeed(graph, start, goal);
+        t2 = Instant.now();
+        elapse = Duration.between(t1, t2);
+        ArrayList<NodeContainer> path = a.getPath(start, goal);
+        JSONArray data = new JSONArray();
+        for (NodeContainer n : path) {
+            cpath++;
+            JSONObject element = new JSONObject();
+            element.put("id", cpath);
+            element.put("lat", n.getLatitude());
+            element.put("lon", n.getLongitude());
+            element.put("node", n.getId());
+            element.put("w", 0);
+            data.put(element);
+            System.out.printf("Node %d, Gewicht: %f ", n.getNode().getId(), n.getD());
+        }
+        System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", a.getContainer(goal).getD(), cpath, elapse.toMillis());
+        System.out.println(data);
 
+        System.out.printf("start\n");
+        a.clearContainer();
+        System.out.printf("end\n");
+
+        cpath = 0;
+        t1 = Instant.now();
+        a.runAStar(graph, start, goal);
+        t2 = Instant.now();
+        elapse = Duration.between(t1, t2);
+        path = a.getPath(start, goal);
+        data = new JSONArray();
+        for (NodeContainer n : path) {
+            cpath++;
+            JSONObject element = new JSONObject();
+            element.put("id", cpath);
+            element.put("lat", n.getLatitude());
+            element.put("lon", n.getLongitude());
+            element.put("node", n.getId());
+            element.put("w", 0);
+            data.put(element);
+            System.out.printf("Node %d, Gewicht: %f ", n.getNode().getId(), n.getD());
+        }
+        System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", a.getContainer(goal).getD(), cpath, elapse.toMillis());
+        System.out.println(data);
     }
 
     @Test
     public void getPath() {
         AStar a = new AStar();
         AStar b = new AStar();
-        b.runAStarWithSpeed(this.graph,this.start, this.goal);
-        ArrayList<NodeContainer> pathWithSpeed=b.getPath(this.start, this.goal);
+        b.runAStarWithSpeed(this.graph, this.start, this.goal);
+        ArrayList<NodeContainer> pathWithSpeed = b.getPath(this.start, this.goal);
 
         for (NodeContainer n : pathWithSpeed) {
             System.out.printf("Node %d, ", n.getNode().getId());
