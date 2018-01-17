@@ -1,6 +1,6 @@
 package de.hsnr.osm2018.core.algoritms;
 
-import de.hsnr.osm2018.provider.RandomProvider;
+import de.hsnr.osm2018.provider.provider.RandomProvider;
 import org.junit.Before;
 import org.junit.Test;
 import de.hsnr.osm2018.data.graph.*;
