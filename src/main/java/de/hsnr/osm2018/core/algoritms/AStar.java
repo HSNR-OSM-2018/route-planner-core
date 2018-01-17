@@ -14,7 +14,7 @@ public class AStar {
     private double computeHeuristic(NodeContainer current, Node goal) {
         //return Math.abs(current.getLongitude() - goal.getLongitude()) + Math.abs(current.getLatitude() - goal.getLatitude());
         double dy = Math.abs(current.getLongitude() - goal.getLongitude());
-        double dx = Math.abs(goal.getLatitude() - goal.getLatitude());
+        double dx = Math.abs(current.getLatitude() - goal.getLatitude());
         return Math.sqrt((dx*dx)+(dy*dy));
     }
 
@@ -56,7 +56,7 @@ public class AStar {
 
             if (!closedlist.contains(u)) {
                 closedlist.add(u);
-                for (Edge e : u.getNode().getEdges()) {
+                for (Edge e : u.getEdges()) {
                     neighbour = getContainer(e.getDestinationNode());
                     if(neighbour.getId() == root.getId()){
                         continue;
@@ -73,7 +73,7 @@ public class AStar {
                         counter++;
                         neighbour.setD(dist);
                         neighbour.setF(h + dist);
-                        neighbour.setParent(u.getParent());
+                        neighbour.setParent(u.getNode());
                     } else if (neighbour.getParent() == null) {
                         cdouble++;
                         neighbour.setD(dist);
@@ -113,7 +113,7 @@ public class AStar {
             }
             if (!closedlist.contains(u)) {
                 closedlist.add(u);
-                for (Edge e : u.getNode().getEdges()) {
+                for (Edge e : u.getEdges()) {
                     if (e.getSpeed() == 0){
                         continue;
                     }
