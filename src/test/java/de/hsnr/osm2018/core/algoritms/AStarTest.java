@@ -59,10 +59,10 @@ public class AStarTest {
         int cpath = 0;
         Instant t1, t2;
         Duration elapse;
-        RandomProvider provider = new RandomProvider(10000);
+        RandomProvider provider = new RandomProvider(10000000);
         Graph graph = provider.getGraph();
         Node start = graph.getNode(1L);
-        Node goal = graph.getNode(950L);
+        Node goal = graph.getNode(950000L);
 
         AStar a = new AStar();
         t1 = Instant.now();

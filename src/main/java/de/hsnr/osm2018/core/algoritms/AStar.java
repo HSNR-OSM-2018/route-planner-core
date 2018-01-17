@@ -9,7 +9,10 @@ import java.util.ArrayList;
 public class AStar {
 
     private double computeHeuristic(Node current, Node goal) {
-        return Math.abs(current.getLongitude() - goal.getLongitude()) + Math.abs(current.getLatitude() - goal.getLatitude());
+        //return Math.abs(current.getLongitude() - goal.getLongitude()) + Math.abs(current.getLatitude() - goal.getLatitude());
+        double dx = Math.abs(current.getLongitude() - goal.getLatitude());
+        double dy = Math.abs(goal.getLongitude() - goal.getLatitude());
+        return Math.sqrt((dx*dx)+(dy*dy));
     }
 
     public boolean runAStar(Graph graph, Node root, Node goal) {
