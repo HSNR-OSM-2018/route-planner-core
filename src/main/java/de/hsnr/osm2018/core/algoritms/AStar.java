@@ -12,10 +12,10 @@ public class AStar {
     private HashMap<Long, NodeContainer> mContainer = new HashMap<>();
 
     private double computeHeuristic(NodeContainer current, Node goal) {
-        //return Math.abs(current.getLongitude() - goal.getLongitude()) + Math.abs(current.getLatitude() - goal.getLatitude());
-        double dy = Math.abs(current.getLongitude() - goal.getLongitude());
-        double dx = Math.abs(current.getLatitude() - goal.getLatitude());
-        return Math.sqrt((dx*dx)+(dy*dy));
+        return Math.abs(current.getLongitude() - goal.getLongitude()) + Math.abs(current.getLatitude() - goal.getLatitude());
+        //double dy = Math.abs(current.getLongitude() - goal.getLongitude());
+        //double dx = Math.abs(current.getLatitude() - goal.getLatitude());
+        //return Math.sqrt((dx*dx)+(dy*dy));
     }
 
     public NodeContainer getContainer(Node node) {
@@ -27,7 +27,7 @@ public class AStar {
     }
 
     public void clearContainer() {
-        mContainer.clear();
+        mContainer = new HashMap<>();
     }
 
     public boolean runAStar(Graph graph, Node root, Node goal) {

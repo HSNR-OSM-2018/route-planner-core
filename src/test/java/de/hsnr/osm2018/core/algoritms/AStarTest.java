@@ -76,7 +76,9 @@ public class AStarTest {
         }
         System.out.printf("\nGewicht : %f, Knoten: %d, Dauer %dms \n", a.getContainer(goal).getD(), cpath, elapse.toMillis());
 
+        System.out.printf("start\n");
         a.clearContainer();
+        System.out.printf("end\n");
 
         t1 = Instant.now();
         a.runAStar(graph,start,goal);
