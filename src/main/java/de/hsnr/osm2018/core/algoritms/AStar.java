@@ -62,7 +62,8 @@ public class AStar {
                         continue;
                     }
                     if (neighbour.getId() == u.getId()) {
-                        neighbour = getContainer(e.getStartNode());
+                        continue;
+                        //neighbour = getContainer(e.getStartNode());
                     }
                     dist = u.getD() + ((double)e.getLength())/(1000);
                    // System.out.printf("dist %f \n", dist);
@@ -124,7 +125,8 @@ public class AStar {
                     }
 
                     if (neighbour.getId() == u.getId()) {
-                        neighbour = getContainer(e.getStartNode());
+                        continue;
+                        //neighbour = getContainer(e.getStartNode());
                     }
 
 
