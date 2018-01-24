@@ -12,6 +12,7 @@ public class DistanceAStar extends AStar {
 
     @Override
     public double getDistance(NodeContainer node, Edge edge) {
-        return node.getD() + ((double) edge.getLength()) / (1000);
+        //return node.getD() + ((double) edge.getLength()) / (1000);  // km
+        return node.getD() + (double) edge.getLength();  // m
     }
 }

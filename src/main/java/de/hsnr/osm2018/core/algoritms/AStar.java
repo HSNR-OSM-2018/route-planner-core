@@ -66,12 +66,12 @@ public abstract class AStar extends PathFinder {
                         continue;
                     }
                     if (neighbour.getId() == u.getId()) {
-                        continue;
                         //neighbour = getContainer(e.getStartNode());
+                        continue;
                     }
                     dist = getDistance(u, e);
                     // System.out.printf("dist %f \n", dist);
-                    h = neighbour.getNode().getDistance(destination);
+                    h = neighbour.getNode().getDistance(destination)*100;
 
                     if (openList.contains(neighbour) && neighbour.getD() > dist) {
                         cDouble++;
