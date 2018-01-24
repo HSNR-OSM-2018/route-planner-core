@@ -12,6 +12,6 @@ public class SpeedAStar extends AStar {
 
     @Override
     public double getDistance(NodeContainer node, Edge edge) {
-        return node.getD() + (((double) (edge.getLength() / 1000)) / edge.getSpeed());
+        return node.getD() + (((double) edge.getLength()) / (((double)edge.getSpeed())/3.6D));
     }
 }
