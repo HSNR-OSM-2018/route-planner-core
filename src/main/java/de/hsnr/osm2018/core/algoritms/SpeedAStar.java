@@ -12,8 +12,8 @@ public class SpeedAStar extends AStar {
     }
 
     @Override
-    public double computeHeuristic(Node start, Node destination, short speed) {
-        return start.getDistance(destination) / (((double)speed) * 3.6D);
+    public double computeHeuristic(Node start, Node destination) {
+        return start.getDistance(destination) / 36.1111D; // 130km/h
     }
 
     @Override
