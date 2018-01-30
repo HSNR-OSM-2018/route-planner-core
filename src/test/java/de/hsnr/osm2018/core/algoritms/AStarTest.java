@@ -102,7 +102,7 @@ public class AStarTest {
         PbfProvider provider = new PbfProvider("ddorf.pbf");
         Graph graph = provider.getGraph();
         Node start = graph.getNode(1544556049L);
-        Node goal = graph.getNode(687006545L);
+        Node goal = graph.getNode(34018014L);
 
         AStar a = new SpeedAStar(graph);
         t1 = Instant.now();
