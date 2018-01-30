@@ -26,8 +26,9 @@ public abstract class AStar extends PathFinder {
         if (mContainer.containsKey(node.getId())) {
             return mContainer.get(node.getId());
         }
-        mContainer.put(node.getId(), new NodeContainer(node));
-        return mContainer.get(node.getId());
+        NodeContainer nodeContainer = new NodeContainer(node);
+        mContainer.put(node.getId(), nodeContainer);
+        return nodeContainer;
     }
 
     public void clearContainer() {
