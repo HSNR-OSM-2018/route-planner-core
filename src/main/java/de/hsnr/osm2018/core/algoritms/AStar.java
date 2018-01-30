@@ -10,8 +10,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
+import java.util.logging.Logger;
 
 public abstract class AStar extends PathFinder {
+
+    private Logger logger = Logger.getLogger(AStar.class.getSimpleName());
 
     private HashMap<Long, NodeContainer> mContainer = new HashMap<>();
 
@@ -35,6 +38,8 @@ public abstract class AStar extends PathFinder {
 
     @Override
     public boolean run(Node start, Node destination) {
+        logger.info("Starting AStar for start = " + start + " and destination " + destination);
+        long startTime = System.currentTimeMillis();
         int counter = 0, cDouble = 0;
         double dist, h;
         PriorityQueue<NodeContainer> openList = new PriorityQueue<>(20, Comparator.comparingDouble(NodeContainer::getF));
@@ -57,6 +62,8 @@ public abstract class AStar extends PathFinder {
                     current = getContainer(current.getParent());
                     addPathNode(0, current.getNode(), current.getD());
                 }
+                long time = System.currentTimeMillis() - startTime;
+                logger.info("Found path in " + (time / 1000) + " seconds");
                 return true;
             }
 
@@ -90,6 +97,8 @@ public abstract class AStar extends PathFinder {
                 }
             }
         }
+        long time = System.currentTimeMillis() - startTime;
+        logger.info("Found no path in " + (time / 1000) + " seconds");
         return false;
     }
 
