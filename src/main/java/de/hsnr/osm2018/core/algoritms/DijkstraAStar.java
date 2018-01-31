@@ -1,9 +1,6 @@
 package de.hsnr.osm2018.core.algoritms;
 
-import de.hsnr.osm2018.data.graph.Edge;
-import de.hsnr.osm2018.data.graph.Graph;
-import de.hsnr.osm2018.data.graph.Node;
-import de.hsnr.osm2018.data.graph.NodeContainer;
+import de.hsnr.osm2018.data.graph.*;
 
 public class DijkstraAStar extends AStar {
 
@@ -12,7 +9,7 @@ public class DijkstraAStar extends AStar {
     }
 
     @Override
-    public double computeHeuristic(Node start, Node destination) {
+    public double computeHeuristic(Node start, Node destination, EdgeType eType) {
         return 0;
     }
 

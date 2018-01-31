@@ -1,9 +1,6 @@
 package de.hsnr.osm2018.core.algoritms;
 
-import de.hsnr.osm2018.data.graph.Edge;
-import de.hsnr.osm2018.data.graph.Graph;
-import de.hsnr.osm2018.data.graph.Node;
-import de.hsnr.osm2018.data.graph.NodeContainer;
+import de.hsnr.osm2018.data.graph.*;
 import de.hsnr.osm2018.data.path.PathFinder;
 
 import java.util.*;
@@ -32,7 +29,7 @@ public abstract class AStar extends PathFinder {
         mContainer = new HashMap<>();
     }
 
-    public abstract double computeHeuristic(Node start, Node destination);
+    public abstract double computeHeuristic(Node start, Node destination, EdgeType eType);
 
     @Override
     public boolean run(Node start, Node destination) {
@@ -94,7 +91,7 @@ public abstract class AStar extends PathFinder {
 
                     dist = getDistance(u, e);
                     // System.out.printf("dist %f \n", dist);
-                    h = computeHeuristic(neighbour.getNode(), destination);
+                    h = computeHeuristic(neighbour.getNode(), destination, e.getType());
 
                     timedist2=timedist2+(System.currentTimeMillis() - timedist1);
 
