@@ -12,7 +12,7 @@ public class DistanceAStar extends AStar {
     }
 
     @Override
-    public double computeHeuristic(Node start, Node destination, short speed) {
+    public double computeHeuristic(Node start, Node destination) {
         return start.getDistance(destination);
     }
 

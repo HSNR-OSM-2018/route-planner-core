@@ -32,7 +32,7 @@ public abstract class AStar extends PathFinder {
         mContainer = new HashMap<>();
     }
 
-    public abstract double computeHeuristic(Node start, Node destination, short speed);
+    public abstract double computeHeuristic(Node start, Node destination);
 
     @Override
     public boolean run(Node start, Node destination) {
@@ -94,7 +94,7 @@ public abstract class AStar extends PathFinder {
 
                     dist = getDistance(u, e);
                     // System.out.printf("dist %f \n", dist);
-                    h = computeHeuristic(neighbour.getNode(), destination, e.getSpeed());
+                    h = computeHeuristic(neighbour.getNode(), destination);
 
                     timedist2=timedist2+(System.currentTimeMillis() - timedist1);
 
