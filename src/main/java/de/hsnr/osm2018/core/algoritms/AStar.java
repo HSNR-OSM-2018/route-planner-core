@@ -12,6 +12,14 @@ public abstract class AStar extends PathFinder {
 
     private HashMap<Long, NodeContainer> mContainer = new HashMap<>();
 
+    public void clearContainer() {
+        mContainer = new HashMap<>();
+    }
+
+    public abstract double computeHeuristic(Node start, Node destination, EdgeType eType);
+
+    public abstract double getDistance(NodeContainer node, Edge edge);
+
     public AStar(Graph graph) {
         super(graph);
     }
@@ -25,11 +33,11 @@ public abstract class AStar extends PathFinder {
         return nodeContainer;
     }
 
-    public void clearContainer() {
-        mContainer = new HashMap<>();
+    public void updateNode(NodeContainer n, double dist, double h, Node u){
+        n.setD(dist);
+        n.setF(h + dist);
+        n.setParent(u);
     }
-
-    public abstract double computeHeuristic(Node start, Node destination, EdgeType eType);
 
     @Override
     public boolean run(Node start, Node destination) {
@@ -98,14 +106,10 @@ public abstract class AStar extends PathFinder {
                     timeopenlist1=System.currentTimeMillis();
                     if (openList.contains(neighbour) && neighbour.getD() > dist) {
                         cDouble++;
-                        neighbour.setD(dist);
-                        neighbour.setF(h + dist);
-                        neighbour.setParent(u.getNode());
+                        updateNode(neighbour, dist, h, u.getNode());
                     } else if (neighbour.getParent() == null) {
                         counter++;
-                        neighbour.setD(dist);
-                        neighbour.setF(h + dist);
-                        neighbour.setParent(u.getNode());
+                        updateNode(neighbour, dist, h, u.getNode());
                         openList.add(neighbour);
                     }
                     timeopenlist2=timeopenlist2+(System.currentTimeMillis()-timeopenlist1);
@@ -119,6 +123,4 @@ public abstract class AStar extends PathFinder {
 
         return false;
     }
-
-    public abstract double getDistance(NodeContainer node, Edge edge);
 }
