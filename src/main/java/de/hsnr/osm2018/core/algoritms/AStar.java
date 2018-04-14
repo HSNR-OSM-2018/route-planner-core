@@ -75,11 +75,11 @@ public abstract class AStar extends PathFinder {
 
                 long time = System.currentTimeMillis() - startTime;
                 logger.info("Found path in " + (time ) + " miliseconds");
-                logger.info("T2: "+ (t2)+" miliseconds");
+                /*logger.info("T2: "+ (t2)+" miliseconds");
                 logger.info("Time Dist: "+ (timedist2)+" miliseconds");
                 logger.info("Time Openlist: "+ (timeopenlist2)+" miliseconds");
                 logger.info("Time While: "+ (timewhile2)+" miliseconds");
-                logger.info("Time IF: "+ (timeif2)+" miliseconds");
+                logger.info("Time IF: "+ (timeif2)+" miliseconds");*/
                 return true;
             }
 

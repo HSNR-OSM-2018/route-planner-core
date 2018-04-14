@@ -1,2 +1,2 @@
 # routeplaner-core
-Graphalgorithms and Server
+Graphalgorithms for finding paths
